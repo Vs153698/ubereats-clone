@@ -7,8 +7,8 @@ const RestaurantItem = ({restaurantData}) => {
     return (
         <TouchableOpacity activeOpacity={.9} style={{ marginBottom: 30 }}>
             {restaurantData?.map((restaurant,index)=>(<View key={index} style={styles.container}>
-                <RestaurantImage image={restaurant.image} />
-                <RestaurantInfo title={restaurant.businessname} rating={parseFloat(restaurant.reviews)/10} />
+                <RestaurantImage image={restaurant.image_url} />
+                <RestaurantInfo title={restaurant.name} rating={parseFloat(restaurant.rating)} />
             </View>))}
         </TouchableOpacity>
     );

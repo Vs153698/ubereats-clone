@@ -6,21 +6,37 @@ import Categories from '../components/Categories';
 import RestaurantItem from '../components/RestaurantItem';
 
 
+
+const YELP_API_KEY = 'kPyKwHbNsy6KHu3z6_OmD1rybrNJ-HaHgwqJIFhDDkZTRrGIG3mX-v4KELBfJB0KRh7gqUGyncnRM2L_nRfmytcz6Q1p9JTljzCJaNDgCb2W4rc2owbc6P-kHx7sYXYx'
 const Home = () => {
     const [restaurantData, setRestaurantData] = useState([]);
     const [activeTab, setActiveTab] = useState('Delivery');
+    const [city, setCity] = useState("Las Vegas");
+    const getRestaurantsFromYelp = () => {
+        const yelpUrl = `https://api.yelp.com/v3/businesses/search?term=restaurants&location=${city}`;
+        const apiOptions = {
+            headers: {
+                Authorization: `Bearer ${YELP_API_KEY}`,
+            },
+        };
+        return fetch(yelpUrl, apiOptions)
+            .then((res) => res.json())
+            .then((json) => {
+                setRestaurantData(
+                    json.businesses.filter((business) =>
+                        business.transactions.includes(activeTab.toLowerCase())
+                    )
+                )
+            })
+    }
     useEffect(() => {
-        fetch("https://foodbukka.herokuapp.com/api/v1/restaurant").then((data) => data.json()).then((data) => {
-            activeTab === "Pickup" ? setRestaurantData(data.Result.filter((item) => item.restauranttype === 'eatery')) : setRestaurantData(data.Result)
-        })
-
-
-    }, [activeTab]);
+        getRestaurantsFromYelp()
+    }, [city, activeTab]);
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
                 <HeaderTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-                <SearchBar />
+                <SearchBar setCity={setCity} />
             </View>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Categories />

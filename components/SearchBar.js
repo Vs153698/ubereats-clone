@@ -2,39 +2,40 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
+import AutoCompleteInput from 'react-native-tomtom-autocomplete';
 
-
-const SearchBar = () => {
+const SearchBar = ({ setCity }) => {
     return (
         <View style={styles.container}>
             {/* to work with googleplaces auto complete we need to enable billing in that project  */}
             {/* here onpress will give data as shown below and we can set the state and use it in our api for finding data according to places */}
-            <GooglePlacesAutocomplete query={{key:'AIzaSyDebscJJwRGSVplHtwBvueVkeZn8GhdmsM',language:'en'}} styles={{
-                textInput: {
-                    backgroundColor: '#eee',
-                    borderRadius: 20,
-                    fontWeight: "700",
-                    marginTop: 7
-                },
-                textInputContainer: {
-                    backgroundColor: '#eee',
-                    borderRadius: 50,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginRight: 10
+            <AutoCompleteInput
+                inputProps={{
+                    placeholder: 'Search Location...'
 
-                }
-            }} onPress={(data,details = null)=>{
-                    console.log(data);
-            }} renderLeftButton={() => (
-                <View style={styles.iconleft}><Ionicons name="location-sharp" size={24} /></View>
-            )} renderRightButton={() => (
-                <View style={styles.rightgoogle}>
-                    <AntDesign name='clockcircle' size={11} style={{ marginRight: 6 }} />
-                    <Text>Search</Text>
-                </View>
-            )} placeholder='Search...' />
-            {/*in acobe google we didnt use style we used styles  as a prop as it is build in package style */}
+                }}
+                inputContainerStyle={{
+                    backgroundColor: "#eee",
+                    borderRadius: 30,
+                    padding: 15,
+                    margin: 10,
+                    borderColor: "grey",
+                }}
+                listItemsContainerStyle={{
+                    borderColor: "grey",
+                    marginRight: 5,
+                    justifyContent: "center",
+                    marginRight: 10,
+                    
+                }}
+                titleStyle={{fontWeight:"700"}}
+                delay={false}
+                bottomDivider
+                tomtomOptions={{ key: "84s1bROWVARuQyPFDDps2VxYD4CIzQg6" }}
+                onPress={(data, details = null) => {
+                    setCity(data.address.municipality);
+                }}
+            />
         </View>
     );
 };
@@ -44,7 +45,6 @@ export default SearchBar;
 const styles = StyleSheet.create({
     container: {
         marginTop: 15,
-        flexDirection: "row",
     },
     iconleft: {
         marginLeft: 10
