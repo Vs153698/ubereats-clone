@@ -4,6 +4,8 @@ import HeaderTabs from '../components/HeaderTabs';
 import SearchBar from '../components/SearchBar';
 import Categories from '../components/Categories';
 import RestaurantItem from '../components/RestaurantItem';
+import BottomTabs from '../components/BottomTabs';
+import { Divider } from 'react-native-elements/dist/divider/Divider';
 
 
 
@@ -33,7 +35,7 @@ const Home = () => {
         getRestaurantsFromYelp()
     }, [city, activeTab]);
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView  style={styles.container}>
             <View style={styles.header}>
                 <HeaderTabs activeTab={activeTab} setActiveTab={setActiveTab} />
                 <SearchBar setCity={setCity} />
@@ -42,6 +44,8 @@ const Home = () => {
                 <Categories />
                 <RestaurantItem restaurantData={restaurantData} />
             </ScrollView>
+            <Divider width={1}/> 
+            <BottomTabs/>
         </SafeAreaView>
     );
 };
@@ -50,7 +54,8 @@ export default Home;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#eee"
+        backgroundColor: "#eee",
+        flex:1, // using flex1 is very important for SafeAreaView,
     },
     header: {
         backgroundColor: "white",
