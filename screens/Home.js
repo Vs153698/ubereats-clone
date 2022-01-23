@@ -1,10 +1,10 @@
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import HeaderTabs from '../components/HeaderTabs';
-import SearchBar from '../components/SearchBar';
-import Categories from '../components/Categories';
-import RestaurantItem from '../components/RestaurantItem';
-import BottomTabs from '../components/BottomTabs';
+import HeaderTabs from '../components/home/HeaderTabs';
+import SearchBar from '../components/home/SearchBar';
+import Categories from '../components/home/Categories';
+import RestaurantItem from '../components/home/RestaurantItem';
+import BottomTabs from '../components/home/BottomTabs';
 import { Divider } from 'react-native-elements/dist/divider/Divider';
 
 
@@ -44,8 +44,10 @@ const Home = () => {
                 <Categories />
                 <RestaurantItem restaurantData={restaurantData} />
             </ScrollView>
-            <Divider width={1}/> 
+            {/* <Divider width={1}/>  */}
+            <View style={styles.bottom}>
             <BottomTabs/>
+            </View>
         </SafeAreaView>
     );
 };
@@ -60,5 +62,9 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: "white",
         padding: 15
+    },
+    bottom:{
+        backgroundColor:"white"
     }
+
 });

@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import AutoCompleteInput from 'react-native-tomtom-autocomplete';
 

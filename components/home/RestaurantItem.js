@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
-import RestaurantImage from './utils/RestaurantImage';
-import RestaurantInfo from './utils/RestaurantInfo';
+import RestaurantImage from '../utils/RestaurantImage';
+import RestaurantInfo from '../utils/RestaurantInfo';
 
 const RestaurantItem = ({restaurantData}) => {
     return (
