@@ -1,21 +1,12 @@
-import { StatusBar, StyleSheet, View } from 'react-native';
-import Home from './screens/Home';
-import RestaurantDetail from './screens/RestaurantDetail';
+import { SafeAreaView, StatusBar } from 'react-native';
+import RootNavigation from './Navigation';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar/>
-      {/* <Home /> */}
-      <RestaurantDetail/>
-    </View>
+    <SafeAreaView style={{flex:1,marginTop: StatusBar.currentHeight}}>
+      <RootNavigation/>
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: { 
-    backgroundColor:"#eee",
-    flex:1
 
-  }
-});
