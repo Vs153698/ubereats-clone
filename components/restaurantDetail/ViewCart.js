@@ -2,7 +2,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
+import db from '../../firebase';
+import { addDoc, collection } from "firebase/firestore";
 import OrderItem from '../utils/OrderItem';
+
 
 // create a component
 const ViewCart = () => {
@@ -20,6 +23,16 @@ const ViewCart = () => {
         style: "currency",
         currency: "usd",
     })
+    const addordertofirebase = async (items) => {
+        try {
+            const docRef = await addDoc(collection(db, "orders"), { items })
+            console.log("added data is", docRef);
+
+        } catch (err) {
+            console.log("error aagya cart mai", err);
+        }
+
+    }
 
     return (
         <>
@@ -38,7 +51,7 @@ const ViewCart = () => {
                             <Text style={styles.subTotalText}>SubTotal</Text>
                             <Text style={styles.subTotalText}>{totalusd}</Text>
                         </View>
-                        <TouchableOpacity onPress={() => setModalVisible(false)}>
+                        <TouchableOpacity onPress={() => { addordertofirebase(items); setModalVisible(false) }}>
                             <View style={styles.btncontainer}>
                                 <View style={styles.checkoutbtn}>
                                     <Text style={styles.checkout}>CheckOut</Text>
@@ -98,7 +111,7 @@ const styles = StyleSheet.create({
     },
     checkout: {
         color: "white",
-        fontSize:16
+        fontSize: 16
 
     },
     checkoutbtn: {
@@ -139,7 +152,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginBottom: 10
     },
-    btncontainer:{
+    btncontainer: {
         justifyContent: "center",
         alignItems: "center",
     }
