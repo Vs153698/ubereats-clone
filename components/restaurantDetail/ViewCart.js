@@ -3,12 +3,14 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 import db from '../../firebase';
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
 import OrderItem from '../utils/OrderItem';
+import LottieView from 'lottie-react-native';
 
 
 // create a component
-const ViewCart = () => {
+const ViewCart = ({ navigation }) => {
+    const [loading, setLoading] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const { items, restaurantName } = useSelector((state) => state.cartReducer.selectedItems)
 
@@ -25,10 +27,13 @@ const ViewCart = () => {
     })
     const addordertofirebase = async (items) => {
         try {
-            const docRef = await addDoc(collection(db, "orders"), { items })
-            console.log("added data is", docRef);
+            const docRef = await addDoc(collection(db, "orders"), { items: items, restaurantName: restaurantName, createdAt: Timestamp.now() })
+            setModalVisible(false)
+            navigation.navigate("OrderCompleted")
+
 
         } catch (err) {
+            setModalVisible(false)
             console.log("error aagya cart mai", err);
         }
 
@@ -51,7 +56,7 @@ const ViewCart = () => {
                             <Text style={styles.subTotalText}>SubTotal</Text>
                             <Text style={styles.subTotalText}>{totalusd}</Text>
                         </View>
-                        <TouchableOpacity onPress={() => { addordertofirebase(items); setModalVisible(false) }}>
+                        <TouchableOpacity onPress={() => addordertofirebase(items)}>
                             <View style={styles.btncontainer}>
                                 <View style={styles.checkoutbtn}>
                                     <Text style={styles.checkout}>CheckOut</Text>

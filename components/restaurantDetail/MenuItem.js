@@ -105,17 +105,18 @@ function MenuItem({ restaurantName }) {
     }
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
-            {foods.map((food, index) => (<View key={index}><View style={styles.container}>
-                <BouncyCheckbox isChecked={isFoodinCart(food, items)} onPress={(checkboxValue) => selectitem(food, checkboxValue)} iconStyle={{ borderColor: "lighgray", borderRadius: 0 }} fillColor='green' />
-                <View style={styles.info}>
-                    <Text style={styles.title}>{food.title}</Text>
-                    <Text>{food.description}</Text>
-                    <Text>{food.price}</Text>
+            {foods.map((food, index) => (
+                <View key={index}><View style={styles.container}>
+                    <BouncyCheckbox isChecked={isFoodinCart(food, items)} onPress={(checkboxValue) => selectitem(food, checkboxValue)} iconStyle={{ borderColor: "lighgray", borderRadius: 0 }} fillColor='green' />
+                    <View style={styles.info}>
+                        <Text style={styles.title}>{food.title}</Text>
+                        <Text>{food.description}</Text>
+                        <Text>{food.price}</Text>
+                    </View>
+                    <Image style={styles.image} source={{ uri: food.image }} resizeMode='cover' />
                 </View>
-                <Image style={styles.image} source={{ uri: food.image }} resizeMode='cover' />
-            </View>
-                <Divider width={0.5} orientation='vertical' style={{ marginVertical: 10, marginHorizontal: 20 }} />
-            </View>
+                    <Divider width={0.5} orientation='vertical' style={{ marginVertical: 10, marginHorizontal: 20 }} />
+                </View>
             ))}
         </ScrollView>
     );

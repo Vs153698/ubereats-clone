@@ -6,7 +6,7 @@ const CartReducer = (state = defaultState, action) => {
         case 'ADD_TO_CART': {
             let newState = { ...state };
             if (action.payload.checkboxValue) {
-                console.log("Added to cart");
+    
                 newState.selectedItems = {
                     items: [...newState.selectedItems.items, action.payload],
                     restaurantName: action.payload.restaurantName
@@ -22,7 +22,6 @@ const CartReducer = (state = defaultState, action) => {
                     restaurantName: action.payload.restaurantName
                 }
             }
-            console.log(newState, "👍");
             return newState
         }
         default:
