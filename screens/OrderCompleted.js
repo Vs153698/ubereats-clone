@@ -27,13 +27,13 @@ const OrderCompleted = () => {
     return (
         <View style={styles.container}>
             <LottieView ref={ref2} source={require('../assets/animations/check-mark.json')} loop={false} autoplay={true} style={{ height: 100, alignSelf: "center", marginBottom: 30, width: 100 }} />
-            <Text style={styles.title}>Your order at {restaurantName} has been placed for {totalusd}</Text>
+            <Text style={styles.titlemain}>Your order at {restaurantName} has been placed for {totalusd}</Text>
             <View style={styles.itemcontainer}>
                 <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
                     {items.map((food, index) => (
                         <View key={index}><View style={styles.containerfood}>
                             <View style={styles.infofood}>
-                                <Text style={styles.title}>{food.titlefood}</Text>
+                                <Text style={styles.title}>{food.title}</Text>
                                 <Text>{food.description}</Text>
                                 <Text>{food.price}</Text>
                             </View>
@@ -58,6 +58,11 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     title: {
+        fontSize: 16,
+        fontWeight: "bold",
+        textAlign: "left"
+    },
+    titlemain: {
         fontSize: 16,
         fontWeight: "bold",
         textAlign: "center"

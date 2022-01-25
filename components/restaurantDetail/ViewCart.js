@@ -1,5 +1,5 @@
 //import liraries
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 import db from '../../firebase';
@@ -27,17 +27,24 @@ const ViewCart = ({ navigation }) => {
     })
     const addordertofirebase = async (items) => {
         try {
-            const docRef = await addDoc(collection(db, "orders"), { items: items, restaurantName: restaurantName, createdAt: Timestamp.now() })
             setModalVisible(false)
+            setLoading(true)
+            const docRef = await addDoc(collection(db, "orders"), { items: items, restaurantName: restaurantName, createdAt: Timestamp.now() })
             navigation.navigate("OrderCompleted")
+            setLoading(false)
 
 
         } catch (err) {
             setModalVisible(false)
             console.log("error aagya cart mai", err);
+            setLoading(false)
         }
 
     }
+    const ref2 = useRef();
+    useEffect(() => {
+        ref2?.current?.play()
+    }, [loading])
 
     return (
         <>
@@ -67,6 +74,7 @@ const ViewCart = ({ navigation }) => {
                     </View>
                 </View>
             </Modal>
+
             {total ? <View style={styles.cartcontainer}>
                 <View style={styles.main} >
                     <TouchableOpacity onPress={() => setModalVisible(true)} activeOpacity={0.6} style={styles.container}>
@@ -75,6 +83,11 @@ const ViewCart = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             </View> : (<></>)}
+           {loading ? (<View style={loading && styles.loadingcontainer}>
+              
+                    <LottieView ref={ref2} source={require('../../assets/animations/scanner.json')} autoplay={true} style={{ height: 200, width: 200 }} />
+                
+            </View>) : (<></>)}
         </>
     );
 
@@ -160,6 +173,15 @@ const styles = StyleSheet.create({
     btncontainer: {
         justifyContent: "center",
         alignItems: "center",
+    },
+    loadingcontainer: {
+        position: "absolute",
+        height:"100%",
+        width:"100%",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "black",
+        opacity: 0.6
     }
 });
 //make this component available to the app
